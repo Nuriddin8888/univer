@@ -30,3 +30,15 @@ phone_btn = ReplyKeyboardMarkup(
         ]
     ], resize_keyboard=True
 )
+
+
+
+def city_keyboard(city: str | None):
+    if not city:
+        return None
+
+    return ReplyKeyboardMarkup(
+        keyboard=[[KeyboardButton(text=city)]],
+        resize_keyboard=True,
+        one_time_keyboard=True
+    )

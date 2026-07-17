@@ -1,5 +1,6 @@
 from aiogram.fsm.state import State, StatesGroup
 
 
-class TranslatorState(StatesGroup):
+class TranslateState(StatesGroup):
     text = State()
+    language = State()

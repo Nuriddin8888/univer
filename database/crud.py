@@ -11,6 +11,7 @@ def init_db():
         full_name VARCHAR,
         username VARCHAR UNIQUE,
         phone_number VARCHAR,
+        city TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
     
     conn.commit()
@@ -34,3 +35,34 @@ def get_user(user_id):
     conn.commit()
     conn.close()
     return user
+
+
+def update_city(user_id, city):
+    conn = sqlite3.connect("univer.db")
+    cur = conn.cursor()
+    cur.execute("UPDATE users SET city = ? WHERE user_id = ?",(city, user_id))
+    conn.commit()
+    conn.close()
+
+
+def get_user_city(user_id):
+    conn = sqlite3.connect("univer.db")
+    cur = conn.cursor()
+    cur.execute("SELECT city FROM users WHERE user_id = ?",(user_id,))
+    row = cur.fetchone()
+    return row[0] if row and row[0] else None
+
+
+
+def get_users(offset=0, limit=5):
+    conn = sqlite3.connect("univer.db")
+    cur = conn.cursor()
+    cur.execute("SELECT user_id, full_name, username, phone_number, created_at FROM users LIMIT ? OFFSET ?",(limit, offset))
+    return cur.fetchall()
+
+
+def users_count():
+    conn = sqlite3.connect("univer.db")
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM users")
+    return cur.fetchone()[0]
