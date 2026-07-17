@@ -6,7 +6,7 @@ from aiogram import Bot, Dispatcher
 from config import TOKEN
 from database.crud import init_db
 
-from handlers import start, instagram, translate, prayer, weather
+from handlers import start, instagram, translate, prayer, weather, pdf
 
 logging.basicConfig(level=logging.INFO)
 
@@ -21,6 +21,7 @@ async def main():
     dp.include_router(translate.router)
     dp.include_router(prayer.router)
     dp.include_router(weather.router)
+    dp.include_router(pdf.router)
 
     init_db()
     await dp.start_polling(bot)
